@@ -1,0 +1,25 @@
+#
+#  anm_server config file sample
+#
+#      these value are default set 
+#
+
+# UDP port that connect from/to Rinions
+MinUdpDataPort  8201
+MaxUdpDataPort  8300
+
+
+# Max idle time for UDP relay program (second)  
+MaxIdleTime		600
+
+
+# Working directory. The effect user should be able to write it. 
+#Temp_File_Dir   	/var/anm_server/
+
+
+# SLKinect2 access control list file
+#Hosts_Allow_File	/usr/local/etc/anm_server/hosts_access.allow
+
+
+#GroupKeyPrefix  EDU
+

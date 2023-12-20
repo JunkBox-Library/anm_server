@@ -1,0 +1,13 @@
+# Sample of Access Control List
+
+# is for comment.
+# Blank Line is ignored.
+
+192.168.1.1  # access is allowed from 192.168.1.1 only
+192.168.27   # allowed from 192.168.27.0 - 192.168.27.255
+192.168.28.20/255.255.255.0 # allowed from 192.168.28.0 - 192.168.28.255
+192.168.28.10/255.255. # allowed from 192.168.0.0 - 192.168.255.255
+192.168.28.0/20  # allowed from 192.168.16.0 - 192.168.31.255
+www.star-dust.jp # FQDN is transformed to IP address and checked. access is allowed from www.star-dust.jp only
+www.opensim.tuis.ac.jp/255.255.255.240 # FQDN is transformed to IP address and checked
+www.nsl.tuis.ac.jp/20  # FQDN is transformed to IP address and checked

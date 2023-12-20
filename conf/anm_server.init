@@ -1,0 +1,102 @@
+#!/bin/sh
+#
+# chkconfig: 345 99 01
+# description: Second Life/OpenSim Animation Relay Server for SLKinect2
+# processname: anm_server
+#
+
+# ANM_SERVER
+PROG=anm_server
+SERVER=/usr/local/bin/$PROG
+
+#Server Port
+SPORT=8200
+
+
+# PID File
+PIDFL=/var/run/${PROG}.pid
+
+# Configure File
+CONFF=/usr/local/etc/${PROG}/${PROG}.conf
+
+# Effective User
+EUSER=nobody
+
+
+# Log File Working Directory
+LOGFLD=/var/${PROG}
+
+# Log File Name
+LOGFL=${PROG}.log
+
+# Debug Log File Name
+#DEBUGLOG=${PROG}.log
+
+
+# IP Address of Network Interface (for multi network interfaces)
+#INTERF=192.168.1.100
+
+# 
+OPTIONS=
+
+
+[ "$SERVER" = "" ] && exit 0
+[ "$SPORT" = ""  ] && exit 0
+[ "$PIDFL" = ""  ] && exit 0
+[ -x "$SERVER" ]   || exit 0
+
+[ "$EUSER" = ""  ] || OPTIONS=${OPTIONS}" -u $EUSER "
+[ "$INTERF" = "" ] || OPTIONS=${OPTIONS}" -i $INTERF "
+[ "$LOGFL" = ""  ] || OPTIONS=${OPTIONS}" -l ${LOGFLD}/${LOGFL} "
+[ -f "$CONFF"  ]   && OPTIONS=${OPTIONS}" -f $CONFF "
+
+
+PROGRAM="$SERVER -p $SPORT -pid $PIDFL $OPTIONS"
+
+
+start() {
+	echo "Starting $PROG"
+	if [ "$DEBUGLOG" != "" ]; then
+		$PROGRAM -d 1> ${LOGFLD}/${DEBUGLOG} 2>&1 &
+	else 
+		$PROGRAM &
+	fi
+}
+
+stop() {
+	if [ -f $PIDFL ]; then
+		read PID < $PIDFL
+		kill -INT $PID
+		rm -f $PIDFL
+		echo "Shutting down $PROG"
+	else
+		echo "Not Found $PIDFL"
+	fi
+}
+
+restart() {
+	stop
+	sleep 2
+	start
+}	
+
+
+
+# See how we were called.
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		restart
+		;;
+	*)
+			echo "Usage: $PROG {start|stop|restart}"
+		exit 1
+esac
+
+exit $?
+

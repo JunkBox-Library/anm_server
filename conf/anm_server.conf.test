@@ -1,0 +1,21 @@
+#
+#  anm_server config file sample
+#
+
+# サーバへのUDP接続ポート
+MinUdpDataPort  8201
+MaxUdpDataPort  8300
+
+
+# UDPプロセスの最大アイドルタイム
+MaxIdleTime		600
+
+# 作業用ディレクトリ＋ファイル接頭文字
+Temp_File_Dir   	../temp/
+
+
+# アクセス許可ファイル
+Hosts_Allow_File	./conf/hosts_access.allow.sample
+
+
+GroupKeyPrefix   NSL_

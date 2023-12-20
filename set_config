@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ -x /sbin/chkconfig ]; then
+	PRG=$1
+	CHK=`/sbin/chkconfig --list $PRG 2>/dev/null`
+	if [ "$CHK" = "" ]; then
+		/sbin/chkconfig --add $PRG 
+		/sbin/chkconfig --level 345 $PRG off 
+	fi
+fi
+
